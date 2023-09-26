@@ -34,7 +34,7 @@
     /></a>
   </p>
   <p align="center">
-    <b> My own Discord Typescript Bot template, with Postgres and Prisma support, because it's the best combo. </b>
+    <b> The LDU Timeline Bot, which allows me to gather informations about start and finish of roleplay journeys and show it on a graph.</b>
   </p>
    <p align="center">
     <a href="https://github.com/PoulpY2K/discordx-prisma-ts/issues">Report bugs</a>
@@ -45,7 +45,7 @@
 
 # 📖 Introduction
 
-A simple Discord bot template made with [Discordx](https://github.com/discordx-ts/discordx) with database and ORM.
+A simple Discord bot made with [Discordx](https://github.com/discordx-ts/discordx) with database and ORM.
 
 # 🏗 Development
 
@@ -70,22 +70,22 @@ npm run start
 
 # 🐋 Docker
 
-To start your application:
+To start the application:
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
-To shut down your application:
+To shut down the application:
 
 ```
-docker-compose down
+docker compose down
 ```
 
-To view your application's logs:
+To view the application's logs:
 
 ```
-docker-compose logs
+docker compose logs
 ```
 
 For the full command list please view the [Docker Documentation](https://docs.docker.com/engine/reference/commandline/cli/).

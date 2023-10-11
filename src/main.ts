@@ -9,6 +9,7 @@ import {
 import {Client} from "discordx";
 import {PrismaClient} from '@prisma/client'
 import {Logger} from "tslog";
+import {Timeline} from "./commands/timeline";
 
 const logger = new Logger({name: "main"});
 let startTimestamp: Date;
@@ -76,7 +77,9 @@ async function run() {
     await bot.login(process.env.BOT_TOKEN);
 }
 
-run().then(() => {
+run().then(async () => {
     logger.info("Starting...");
     startTimestamp = new Date();
+    await Timeline.updateServerChannels();
+    await Timeline.fetchRoleplaySessions();
 });

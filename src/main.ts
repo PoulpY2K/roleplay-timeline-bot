@@ -1,15 +1,17 @@
 import {dirname, importx} from "@discordx/importer";
 import type {GuildMember, Interaction} from "discord.js";
 import {
+    ActivityType,
     ApplicationCommandType,
     ChatInputCommandInteraction,
     ContextMenuCommandInteraction,
-    IntentsBitField
+    IntentsBitField, Presence
 } from "discord.js";
 import {Client} from "discordx";
 import {PrismaClient} from '@prisma/client'
 import {Logger} from "tslog";
 import {Timeline} from "./commands/timeline";
+import Message from "./helper/message";
 
 const logger = new Logger({name: "main"});
 let startTimestamp: Date;
@@ -39,7 +41,7 @@ bot.once("ready", async () => {
     await bot.guilds.fetch();
 
     // Make sure all guild members are cached
-    await bot.guilds.cache.forEach(guild => guild.members.fetch())
+    bot.guilds.cache.forEach(guild => guild.members.fetch())
 
     // Synchronize applications commands with Discord
     await bot.initApplicationCommands();
@@ -51,6 +53,14 @@ bot.once("ready", async () => {
     // await bot.clearApplicationCommands(
     //    ...bot.guilds.cache.map((g) => g.id)
     // );
+
+    if (bot.user) {
+        const {Playing} = ActivityType;
+        bot.user.setActivity({
+            name: "/build 🔨",
+            type: Playing,
+        })
+    }
 
     endTimestamp = new Date();
     logger.info(`Bot started in ${(endTimestamp.getTime() - startTimestamp.getTime())}ms`);
@@ -80,6 +90,8 @@ async function run() {
 run().then(async () => {
     logger.info("Starting...");
     startTimestamp = new Date();
+
     await Timeline.updateServerChannels();
-    await Timeline.fetchRoleplaySessions();
+    Timeline.fetchRoleplaySessions()
+        .then(roleplaySessionsAmount => logger.debug(`Found ${roleplaySessionsAmount} start/finish sessions messages !`));
 });

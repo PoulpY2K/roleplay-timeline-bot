@@ -14,23 +14,23 @@
     "watch": "nodemon --exec tsx src/main.ts"
   },
   "dependencies": {
-    "@discordx/importer": "^1.2.2",
+    "@discordx/importer": "^1.2.3",
     "@discordx/pagination": "^3.4.1",
-    "@prisma/client": "^5.3.1",
-    "discord.js": "^14.11.0",
+    "@prisma/client": "^5.4.2",
+    "discord.js": "^14.13.0",
     "discordx": "^11.7.6",
-    "tslog": "^4.8.2"
+    "tslog": "^4.9.2"
   },
   "devDependencies": {
-    "@types/node": "^20.3.2",
+    "@types/node": "^20.8.4",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
-    "prisma": "^5.3.1",
-    "tsx": "^3.12.7",
+    "prisma": "^5.4.2",
+    "tsx": "^3.13.0",
     "typescript": "^5.2.2"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

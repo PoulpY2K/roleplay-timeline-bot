@@ -1,8 +1,8 @@
-import {Collection, FetchMessagesOptions, Message, TextChannel} from "discord.js";
+import {FetchMessagesOptions, Message, TextChannel} from "discord.js";
 import {setTimeout} from "timers/promises";
 
-export default {
-    getAllMessages: async (channel: TextChannel, timeoutMs: number): Promise<Message[]> => {
+export namespace MessageHelper {
+    export const getAllMessages = async (channel: TextChannel, timeoutMs: number): Promise<Message[]> => {
         let out: Message[] = []
 
         let lastId: string = ""
@@ -29,5 +29,5 @@ export default {
         } while (isFetching);
 
         return out
-    },
+    };
 }

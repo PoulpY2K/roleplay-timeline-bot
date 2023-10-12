@@ -5,31 +5,38 @@ import {
     ApplicationCommandType,
     ChatInputCommandInteraction,
     ContextMenuCommandInteraction,
-    IntentsBitField, Presence
+    IntentsBitField
 } from "discord.js";
 import {Client} from "discordx";
 import {PrismaClient} from '@prisma/client'
 import {Logger} from "tslog";
 import {Timeline} from "./commands/timeline";
-import Message from "./helper/message";
 
 const logger = new Logger({name: "main"});
 let startTimestamp: Date;
 let endTimestamp: Date;
 export const prisma = new PrismaClient()
 
+const {
+    MessageContent,
+    GuildMembers,
+    Guilds,
+    GuildVoiceStates,
+    GuildMessages,
+    GuildMessageReactions
+} = IntentsBitField.Flags;
 export const bot = new Client({
     // To use only guild command
     botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
 
     // Discord intents
     intents: [
-        IntentsBitField.Flags.Guilds,
-        IntentsBitField.Flags.GuildMembers,
-        IntentsBitField.Flags.GuildMessages,
-        IntentsBitField.Flags.GuildMessageReactions,
-        IntentsBitField.Flags.GuildVoiceStates,
-        IntentsBitField.Flags.MessageContent
+        Guilds,
+        GuildMembers,
+        GuildMessages,
+        GuildMessageReactions,
+        GuildVoiceStates,
+        MessageContent
     ],
 
     // Debug logs are disabled in silent mode
@@ -62,8 +69,7 @@ bot.once("ready", async () => {
         })
     }
 
-    endTimestamp = new Date();
-    logger.info(`Bot started in ${(endTimestamp.getTime() - startTimestamp.getTime())}ms`);
+    logger.info(`Bot started in ${(Date.now() - startTimestamp.getTime())}ms`);
 });
 
 bot.on("interactionCreate", (interaction: Interaction) => {
@@ -93,5 +99,5 @@ run().then(async () => {
 
     await Timeline.updateServerChannels();
     Timeline.fetchRoleplaySessions()
-        .then(roleplaySessionsAmount => logger.debug(`Found ${roleplaySessionsAmount} start/finish sessions messages !`));
+        .then(roleplaySessionsAmount => logger.debug(`Found ${roleplaySessionsAmount} start/finish sessions messages in ${new Date(Date.now() - startTimestamp.getTime()).getSeconds()}s !`));
 });

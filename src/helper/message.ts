@@ -16,9 +16,10 @@ export namespace MessageHelper {
                 options.before = lastId
             }
 
-            await setTimeout(timeoutMs);
             const messages = await channel.messages.fetch(options)
             const messageMap = messages.map(messages => messages)
+
+            await setTimeout(timeoutMs);
 
             if (messageMap.length <= 0) {
                 isFetching = false;

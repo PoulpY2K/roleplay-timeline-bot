@@ -10,7 +10,7 @@ import {
 import {Client} from "discordx";
 import {PrismaClient} from '@prisma/client'
 import {Logger} from "tslog";
-import {Timeline} from "./commands/timeline";
+import {Timeline} from "./timeline";
 
 const logger = new Logger({name: "main"});
 let startTimestamp: Date;
@@ -97,7 +97,8 @@ run().then(async () => {
     logger.info("Starting...");
     startTimestamp = new Date();
 
-    await Timeline.updateServerChannels();
-    Timeline.fetchRoleplaySessions()
-        .then(roleplaySessionsAmount => logger.debug(`Found ${roleplaySessionsAmount} start/finish sessions messages in ${new Date(Date.now() - startTimestamp.getTime()).getSeconds()}s !`));
+    const roleplayChannels = await Timeline.updateServerChannels();
+    const sessionsMessages = await Timeline.fetchAllRoleplaySessions(roleplayChannels)
+    const formattedSessionsMessages = Timeline.formatMessages(sessionsMessages.reverse())
+    logger.debug(`Found ${formattedSessionsMessages.length} start/finish sessions messages in ${new Date(Date.now() - startTimestamp.getTime()).getSeconds()}s !`);
 });

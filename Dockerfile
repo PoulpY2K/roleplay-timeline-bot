@@ -6,7 +6,7 @@ WORKDIR /tmp/app
 
 # Move source files
 COPY package.json .
-COPY prisma ./prisma/
+# COPY prisma ./prisma/
 COPY src ./src
 COPY tsconfig.json .
 
@@ -24,11 +24,11 @@ WORKDIR /app
 
 # Copy build files from build-runner
 COPY --from=build-runner /tmp/app/package.json /app/package.json
-COPY --from=build-runner /tmp/app/prisma/ /app/prisma/
+# COPY --from=build-runner /tmp/app/prisma/ /app/prisma/
 COPY --from=build-runner /tmp/app/build /app/build
 
 # Install production dependencies
 RUN npm install --omit=dev
 
 # Start bot and migrate database
-CMD ["npm", "run", "start:prisma"]
+CMD ["npm", "run", "start"]

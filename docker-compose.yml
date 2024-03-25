@@ -1,33 +1,33 @@
 services:
-  db:
-    image: postgres:${POSTGRES_VERSION:-latest}
-    container_name: timeline-db
-    restart: always
-    volumes:
-      - timeline-data:/var/lib/postgresql/data:rw
-    expose:
-      - "${POSTGRES_PORT:-5432}"
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      retries: 5
-      timeout: 5s
-      interval: 10s
-    env_file:
-      - .env
+  # db:
+  #   image: postgres:${POSTGRES_VERSION:-latest}
+  #   container_name: timeline-db
+  #   restart: always
+  #   volumes:
+  #     - timeline-data:/var/lib/postgresql/data:rw
+  #   expose:
+  #     - "${POSTGRES_PORT:-5432}"
+  #   ports:
+  #     - "${POSTGRES_PORT:-5432}:5432"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     retries: 5
+  #     timeout: 5s
+  #     interval: 10s
+  #   env_file:
+  #     - .env
+  #
   timeline-bot:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: timeline-bot
     restart: always
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     env_file:
       - .env
-
-volumes:
-  timeline-data:
-    external: true
-    name: "timeline-data"
+# volumes:
+#   timeline-data:
+#     external: true
+#     name: "timeline-data"

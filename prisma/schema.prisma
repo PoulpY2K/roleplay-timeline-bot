@@ -8,34 +8,34 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  discordId String   @unique @db.VarChar(255)
-  events    Event[]
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  id        Int             @id @default(autoincrement())
+  discordId String          @unique @db.VarChar(255)
+  events    RoleplayEvent[]
+  createdAt DateTime        @default(now()) @db.Timestamp(0)
+  updatedAt DateTime        @default(now()) @db.Timestamp(0)
 }
 
-model Event {
-  id          Int      @id @default(autoincrement())
-  timestamp   DateTime @db.Timestamp(0)
-  displayName String   @db.VarChar(255)
-  link        String   @db.VarChar(255)
-  eventId     Int      @unique @db.Integer
-  intro       Event?   @relation("LinkedEvent", fields: [eventId], references: [id])
-  outro       Event?   @relation("LinkedEvent")
-  serverId    Int      @db.Integer
-  server      Server   @relation(fields: [serverId], references: [id])
-  userId      Int      @db.Integer
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now()) @db.Timestamp(0)
-  updatedAt   DateTime @default(now()) @db.Timestamp(0)
+model RoleplayEvent {
+  id          Int            @id @default(autoincrement())
+  timestamp   DateTime       @db.Timestamp(0)
+  displayName String         @db.VarChar(255)
+  link        String         @db.VarChar(255)
+  eventId     Int            @unique @db.Integer
+  intro       RoleplayEvent? @relation("LinkedEvent", fields: [eventId], references: [id])
+  outro       RoleplayEvent? @relation("LinkedEvent")
+  serverId    Int            @db.Integer
+  server      Server         @relation(fields: [serverId], references: [id])
+  userId      Int            @db.Integer
+  user        User           @relation(fields: [userId], references: [id])
+  createdAt   DateTime       @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime       @default(now()) @db.Timestamp(0)
 }
 
 model Server {
-  id        Int      @id @default(autoincrement())
-  serverId  String   @unique @db.VarChar(255)
-  name      String   @unique @db.VarChar(255)
-  events    Event[]
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  id        Int             @id @default(autoincrement())
+  serverId  String          @unique @db.VarChar(255)
+  name      String          @unique @db.VarChar(255)
+  events    RoleplayEvent[]
+  createdAt DateTime        @default(now()) @db.Timestamp(0)
+  updatedAt DateTime        @default(now()) @db.Timestamp(0)
 }

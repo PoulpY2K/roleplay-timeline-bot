@@ -8,9 +8,14 @@ import {
   IntentsBitField,
 } from "discord.js";
 import { Client } from "discordx";
-// import { PrismaClient } from "@prisma/client";
 import { Logger } from "tslog";
 import { Timeline } from "./commands/timeline";
+// import { PrismaClient } from "@prisma/client";
+
+const env = process.env.NODE_ENV || 'development';
+
+const dotenv = await import(env == "development" ? 'dotenv' : '');
+if (dotenv) dotenv.config();
 
 const logger = new Logger({ name: "main" });
 let startTimestamp: Date;
